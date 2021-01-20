@@ -16,6 +16,8 @@ services:
     hostname: db
     image: mysql:5.7
     container_name: dbdaw
+    ports:
+      - '3306:3306'
     volumes:
       - ./data/db:/var/lib/mysql
       - ./init-db:/docker-entrypoint-initdb.d
@@ -25,6 +27,7 @@ services:
       - MYSQL_USER=dbuser
       - MYSQL_PASSWORD=secret
     networks:
+      - frontend
       - backend
   ejercicios:
     build: ./dockerfiles/introduccionphp
@@ -50,6 +53,104 @@ services:
       - db
     environment:
       - VIRTUAL_HOST=mvc.local,www.mvc.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  mvc:
+    build: ./dockerfiles/mvc
+    container_name: mvc
+    hostname: mvc
+    volumes:
+      - ./data/mvc:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=mvc.local,www.mvc.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  taller:
+    build: ./dockerfiles/mvc
+    container_name: taller
+    hostname: taller
+    volumes:
+      - ./data/taller:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=taller.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  taller2:
+    build: ./dockerfiles/mvc
+    container_name: taller2
+    hostname: taller2
+    volumes:
+      - ./data/taller2:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=taller2.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  penya:
+    build: ./dockerfiles/mvc
+    container_name: penya
+    hostname: penya
+    volumes:
+      - ./data/penya:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=penya.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  biblioteca2:
+    build: ./dockerfiles/mvc
+    container_name: biblioteca2
+    hostname: biblioteca2
+    volumes:
+      - ./data/biblioteca2:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=biblioteca2.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  penya2:
+    build: ./dockerfiles/mvc
+    container_name: penya2
+    hostname: penya2
+    volumes:
+      - ./data/penya2:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=penya2.local
+    restart: always
+    networks:
+      - frontend
+      - backend      
+  biblioteca:
+    build: ./dockerfiles/mvc
+    container_name: biblioteca
+    hostname: biblioteca
+    volumes:
+      - ./data/biblioteca:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - VIRTUAL_HOST=biblioteca.local
     restart: always
     networks:
       - frontend
