@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
         echo "País paco: " . $row["name"]. " - Continente: " . $row["continent"]. " -Región: " . $row["region"]. "<br>";
     }
 } else {
-    echo "0 results don adolfo 3, se va a venir a badajoz";
+    echo "0 results Fernando";
 }
 $conn->close();
 ?>
